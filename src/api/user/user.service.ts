@@ -16,8 +16,8 @@ export class UserService {
   public createUser(body: CreateUserDto): Promise<User> {
     const user: User = new User();
 
-    user.name = body.name;
     user.email = body.email;
+    user.password = user.password;
 
     return this.repository.save(user);
   }
