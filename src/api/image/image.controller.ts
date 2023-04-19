@@ -19,9 +19,7 @@ export class ImageController {
   @Post('upload')
   @UseInterceptors(FilesInterceptor('file', null, multerOptions))
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
-    console.log('111');
     const uploadedFiles: string[] = this.service.uploadFiles(files);
-    console.log('222');
 
     return {
       status: 200,
