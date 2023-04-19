@@ -7,7 +7,7 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { SignInDto, SignUpDto } from './dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
@@ -16,15 +16,16 @@ export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
 
-  @Get(':id')
-  public getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
-    console.log(id);
+  @Post(':signin')
+  public signIn(@Body() body: SignInDto): Promise<User> {
+    const result = this.service.getUser(body);
+    console.log(result);
 
-    return this.service.getUser(id);
+    return result;
   }
 
-  @Post()
-  public createUser(@Body() body: CreateUserDto): Promise<User> {
+  @Post(':signup')
+  public signUp(@Body() body: SignUpDto): Promise<User> {
     return this.service.createUser(body);
   }
 }
