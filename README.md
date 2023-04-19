@@ -1,3 +1,7 @@
+https://betterprogramming.pub/nest-js-project-with-typeorm-and-postgres-ce6b5afac3be
+
+docker run -p 5432:5432 --name share-pic-db -e POSTGRES_PASSWORD=z1x2c3 -e TZ=Asia/Seoul -v /Users/choeeun-u/project/share/db:/var/lib/postgresql/data -d postgres
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
