@@ -20,7 +20,7 @@ export class UserService {
     const user: User = new User();
 
     user.id = body.id;
-    user.password = user.password;
+    user.password = body.password;
 
     return this.repository.save(user);
   }
