@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { SignInDto, SignUpDto } from './dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -16,16 +8,16 @@ export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
 
-  @Post(':signin')
+  @Post(':signIn')
   public signIn(@Body() body: SignInDto): Promise<User> {
     const result = this.service.getUser(body);
-    console.log(result);
 
     return result;
   }
 
-  @Post(':signup')
+  @Post(':signUp')
   public signUp(@Body() body: SignUpDto): Promise<User> {
-    return this.service.createUser(body);
+    const result = this.service.createUser(body);
+    return result;
   }
 }

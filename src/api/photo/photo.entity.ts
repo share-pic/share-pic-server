@@ -1,30 +1,34 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
+  ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Gallery } from '../gallery/gallery.entity';
-import { Photo } from '../photo/photo.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
-export class User {
+export class Photo {
   @PrimaryGeneratedColumn()
   public index!: number;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar' })
   public id: string;
 
   @Column({ type: 'varchar' })
-  public password: string;
+  public fileName: string;
 
-  @OneToMany(() => Gallery, gallery => gallery.user)
-  public galleries: Gallery[];
+  @Column({ type: 'varchar' })
+  public fileUrl: string;
 
-  @OneToMany(() => Photo, photo => photo.user)
-  public photos: Photo[];
+  @ManyToOne(() => Gallery, gallery => gallery.photos)
+  public gallery: Gallery;
+
+  @ManyToOne(() => User, user => user.photos)
+  public user: User;
 
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;

@@ -5,7 +5,7 @@ export class SignUpDto {
   @IsNotEmpty()
   public password: string;
 
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
-  public email: string;
+  public id: string;
 }

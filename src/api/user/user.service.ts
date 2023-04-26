@@ -11,7 +11,7 @@ export class UserService {
 
   public getUser(body: SignInDto): Promise<User> {
     return this.repository.findOneBy({
-      email: body.email,
+      id: body.id,
       password: body.password,
     });
   }
@@ -19,7 +19,7 @@ export class UserService {
   public createUser(body: SignUpDto): Promise<User> {
     const user: User = new User();
 
-    user.email = body.email;
+    user.id = body.id;
     user.password = user.password;
 
     return this.repository.save(user);
