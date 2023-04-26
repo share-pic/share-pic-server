@@ -1,8 +1,8 @@
-FROM node:18
-RUN mkdir -p /var/app
-WORKDIR /var/app
-COPY . .
+FROM node:latest
+WORKDIR /app
+RUN apt-get update && apt-get install -y git
+RUN git clone https://github.com/share-pic/share-pic-server
+WORKDIR /app/share-pic-server
 RUN npm install
-RUN npm run build
 EXPOSE 3000
-CMD [ "node", "dist/main.js" ]
+CMD ["npm", "run", "start"]
