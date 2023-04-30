@@ -16,6 +16,12 @@ export class UserService {
     });
   }
 
+  public checkId(body: SignInDto): Promise<number> {
+    return this.repository.countBy({
+      id: body.id,
+    });
+  }
+
   public createUser(body: SignUpDto): Promise<User> {
     const user: User = new User();
 
