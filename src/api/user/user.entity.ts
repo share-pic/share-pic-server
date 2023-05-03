@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
+import { GalleryParticipants } from '../gallery-participants/gallery-participants.entity';
 import { Gallery } from '../gallery/gallery.entity';
 import { Photo } from '../photo/photo.entity';
 
@@ -20,11 +21,17 @@ export class User {
   @Column({ type: 'varchar' })
   public password: string;
 
-  @OneToMany(() => Gallery, gallery => gallery.user)
+  @OneToMany(() => Gallery, gallery => gallery.master)
   public galleries: Gallery[];
 
   @OneToMany(() => Photo, photo => photo.user)
   public photos: Photo[];
+
+  @OneToMany(
+    () => GalleryParticipants,
+    galleryParticipants => galleryParticipants.user,
+  )
+  public galleryParticipants: GalleryParticipants[];
 
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;

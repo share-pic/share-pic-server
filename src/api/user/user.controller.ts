@@ -2,7 +2,7 @@ import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { SignInDto, SignUpDto } from './dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
-import { Message, signIn } from './user.type';
+import { SignIn, SignUp } from './user.type';
 
 @Controller('user')
 export class UserController {
@@ -10,32 +10,36 @@ export class UserController {
   private readonly service: UserService;
 
   @Post('/signIn')
-  public async signIn(@Body() body: SignInDto): Promise<signIn> {
+  public async signIn(@Body() body: SignInDto): Promise<SignIn> {
     console.log('signIn');
 
     const result = await this.service.getUser(body);
     if (!result) {
-      const isIdExist = await this.service.checkId(body);
+      const isIdExist = await this.service.checkId(body.id);
       return {
         id: '',
         isDelete: false,
-        message: isIdExist
-          ? '패스워드가 틀렸습니다'
-          : '존재하지 않는 아이디 입니다',
+        code: isIdExist ? 101 : 102,
       };
     } else {
       return {
         id: result.id,
         isDelete: result.isDeleted,
-        message: '정상 로그인',
+        code: 100,
       };
     }
   }
 
   @Post('/signUp')
-  public async signUp(@Body() body: SignUpDto): Promise<Message> {
-    const result = this.service.createUser(body);
+  public async signUp(@Body() body: SignUpDto): Promise<SignUp> {
+    const isDuplicate = await this.service.checkId(body.id);
+    console.log(isDuplicate);
 
-    return { message: 'as' };
+    if (isDuplicate) {
+      return { isCreated: false, code: 111 };
+    } else {
+      this.service.createUser(body);
+      return { isCreated: true, code: 110 };
+    }
   }
 }

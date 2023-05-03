@@ -20,7 +20,7 @@ export class Gallery {
   public name: string;
 
   @ManyToOne(() => User, user => user.galleries)
-  public user: User;
+  public master: User;
 
   @OneToMany(
     () => GalleryParticipants,

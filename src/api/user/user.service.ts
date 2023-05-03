@@ -16,9 +16,9 @@ export class UserService {
     });
   }
 
-  public checkId(body: SignInDto): Promise<number> {
+  public checkId(id: string): Promise<number> {
     return this.repository.countBy({
-      id: body.id,
+      id,
     });
   }
 
@@ -29,5 +29,8 @@ export class UserService {
     user.password = body.password;
 
     return this.repository.save(user);
+  }
+  public findOne(id): Promise<User> {
+    return this.repository.findOneBy({ id });
   }
 }
